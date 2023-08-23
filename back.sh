@@ -27,7 +27,7 @@ root_type=`echo $root_info | awk '{print $2}'`
 
 dr=`echo $root_info | awk '{print $4}'`
 db=`df -P | grep /dev/mmcblk0p1 | awk '{print $2}'`
-ds=`echo $dr $db |awk '{print int(($1+$2)*1.2)}'`
+ds=`echo $dr $db |awk '{print int(($1+$2)*1.4)}'`
 
 echo "create $file ..."
 
@@ -57,7 +57,7 @@ parted $file --script -- mkpart primary fat32 $start $end
 parted $file --script -- mkpart primary ext4 $end2 -1
 
 loopdevice=`losetup -f --show $file`
-device=`kpartx -va $loopdevice | sed -E 's/.*(loop[0-9])p.*/\1/g' | head -1`
+device=`kpartx -va $loopdevice | sed -E 's/.*(loop[0-9][0-9])p.*/\1/g' | head -1`
 device="/dev/mapper/${device}"
 
 echo "device=$device"
