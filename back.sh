@@ -57,7 +57,7 @@ parted $file --script -- mkpart primary fat32 $start $end
 parted $file --script -- mkpart primary ext4 $end2 -1
 
 loopdevice=`losetup -f --show $file`
-device=`kpartx -va $loopdevice | sed -E 's/.*(loop[0-9][0-9])p.*/\1/g' | head -1`
+device=`kpartx -va $loopdevice | sed -E 's/.*(loop[0-9])p.*/\1/g' | head -1`
 device="/dev/mapper/${device}"
 
 echo "device=$device"
